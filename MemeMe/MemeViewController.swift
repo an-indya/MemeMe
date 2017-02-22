@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MemeViewController: UIViewController {
 
     @IBOutlet weak var memeView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet var textFieldsOutletCollection: [UITextField]!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
 
     let imagePicker = UIImagePickerController()
     let notificationManager = KeyboardNotificationManager.shared
@@ -48,7 +49,7 @@ class ViewController: UIViewController {
         AlertManager.showAlertController(with: .actionSheet,
                                          title: Messages.choiceTitle.rawValue,
                                          message: Messages.choiceText.rawValue,
-                                         alertActions: pickerActions,
+                                         alertActions: PickerActionList.generatePickerActions(),
                                          presentationHandler: {[weak self](viewController, animated) in
                                             UIPresenter.presentViewController(presentedViewController: viewController, from: self)},
                                          actionHandler: {[weak self](sourceType) in
@@ -59,6 +60,7 @@ class ViewController: UIViewController {
 
     @IBAction func didCancel(_ sender: Any) {
         UIPresenter.resetView(for: textFieldsOutletCollection, imageView: memeView)
+        shareButton.isEnabled = false
     }
 
     @IBAction func didPressBackground(_ sender: Any) {
@@ -67,25 +69,35 @@ class ViewController: UIViewController {
 
     func save(memedImage: UIImage) {
         // Create the meme
-        let _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeView.image!, memedImage: memedImage)
+        if let topText = topTextField.text,
+            let bottomText = bottomTextField.text,
+            let originalImage = memeView.image {
+            let _ = Meme(topText: topText, bottomText: bottomText, originalImage: originalImage, memedImage: memedImage)
+        }
+        else {
+            AlertManager.showAlertController(with: .alert, title: Messages.errorTitle.rawValue, message: Messages.textMissing.rawValue, alertActions: alertActions, presentationHandler: { [weak self](viewController, animated) in
+                UIPresenter.presentViewController(presentedViewController: viewController, from: self)
+            }, actionHandler: nil)
+        }
     }
 }
 
 //MARK: - UIImagePickerControllerDelegate Methods
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MemeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             memeView.image = image
         }
         UIPresenter.resetTextFields(outletCollection: textFieldsOutletCollection, enabled: true)
+        shareButton.isEnabled = true
         dismiss(animated: true, completion: nil)
     }
 }
 
 //MARK: - UITextFieldDelegate Methods
 
-extension ViewController: UITextFieldDelegate {
+extension MemeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         notificationManager.selectedTextField = textField.tag == topTextField.tag ? .topTextField : .bottomTextField
         return true

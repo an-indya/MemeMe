@@ -50,7 +50,7 @@ extension UIPresenter {
                                    from viewController: UIViewController?,
                                    source: UIImagePickerControllerSourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source) {
-            if let viewController = viewController as? ViewController {
+            if let viewController = viewController as? MemeViewController {
                 imagePicker.delegate = viewController
                 imagePicker.sourceType = source
                 imagePicker.allowsEditing = true

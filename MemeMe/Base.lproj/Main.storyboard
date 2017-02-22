@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E154a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HES-hb-kjn">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -34,40 +34,43 @@
         <!--Meme Me-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNW-mb-2Ca">
-                                <rect key="frame" x="-4" y="64" width="383" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="667" height="311"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n5i-4X-ae6">
-                                        <rect key="frame" x="0.0" y="0.0" width="383" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="667" height="311"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="usG-pb-S3W">
-                                        <rect key="frame" x="0.0" y="0.0" width="383" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="667" height="311"/>
                                         <connections>
                                             <action selector="didPressBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hug-ls-Cts"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Text Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iIK-vW-dBE" userLabel="TopTextField">
-                                        <rect key="frame" x="16" y="10" width="351" height="82"/>
+                                        <rect key="frame" x="16" y="10" width="635" height="82"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="82" id="OYP-dR-Wt3"/>
                                         </constraints>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="PermanentMarker" family="Permanent Marker" pointSize="35"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="9E6-x3-qJf"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Text Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cpq-Sb-coU" userLabel="BottomTextField">
-                                        <rect key="frame" x="16" y="468" width="351" height="81"/>
+                                        <rect key="frame" x="16" y="207" width="635" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="81" id="gN7-VT-IUd"/>
+                                            <constraint firstAttribute="height" constant="40" id="gN7-VT-IUd"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="PermanentMarker" family="Permanent Marker" pointSize="32"/>
@@ -91,14 +94,14 @@
                                     <constraint firstAttribute="bottom" secondItem="n5i-4X-ae6" secondAttribute="bottom" id="nF1-3A-YlG"/>
                                     <constraint firstItem="iIK-vW-dBE" firstAttribute="centerX" secondItem="DNW-mb-2Ca" secondAttribute="centerX" id="pde-QU-dZq"/>
                                     <constraint firstItem="iIK-vW-dBE" firstAttribute="top" secondItem="DNW-mb-2Ca" secondAttribute="top" constant="10" id="spZ-Or-xJa"/>
-                                    <constraint firstAttribute="bottom" secondItem="Cpq-Sb-coU" secondAttribute="bottom" constant="54" id="tUu-Fn-rj4"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cpq-Sb-coU" secondAttribute="bottom" constant="64" id="tUu-Fn-rj4"/>
                                     <constraint firstAttribute="bottom" secondItem="usG-pb-S3W" secondAttribute="bottom" id="ubg-Vx-mab"/>
                                     <constraint firstItem="Cpq-Sb-coU" firstAttribute="leading" secondItem="DNW-mb-2Ca" secondAttribute="leading" constant="16" id="xbg-wG-PJ3"/>
                                     <constraint firstItem="Cpq-Sb-coU" firstAttribute="centerX" secondItem="DNW-mb-2Ca" secondAttribute="centerX" id="ytU-s3-WjJ"/>
                                 </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGb-A2-CSI">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="331" width="667" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="tcF-q1-sKw"/>
@@ -120,7 +123,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Meme Me" id="uBP-ZA-5re">
-                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="xyN-U7-vyl">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="xyN-U7-vyl">
                             <connections>
                                 <action selector="didPressShareButton:" destination="BYZ-38-t0r" id="4QZ-lo-Mdq"/>
                             </connections>
@@ -135,6 +138,7 @@
                         <outlet property="bottomTextField" destination="Cpq-Sb-coU" id="6uF-VK-Ztf"/>
                         <outlet property="containerView" destination="DNW-mb-2Ca" id="TmW-ZL-YkF"/>
                         <outlet property="memeView" destination="n5i-4X-ae6" id="ACU-OI-xdw"/>
+                        <outlet property="shareButton" destination="xyN-U7-vyl" id="E2F-79-iRB"/>
                         <outlet property="topTextField" destination="iIK-vW-dBE" id="Atw-gO-5wC"/>
                         <outletCollection property="textFieldsOutletCollection" destination="iIK-vW-dBE" collectionClass="NSMutableArray" id="Bjk-Be-HjJ"/>
                         <outletCollection property="textFieldsOutletCollection" destination="Cpq-Sb-coU" collectionClass="NSMutableArray" id="Axa-wg-HWY"/>
