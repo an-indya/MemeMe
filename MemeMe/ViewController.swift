@@ -39,18 +39,8 @@ class ViewController: UIViewController {
 
     //MARK: - Event Handlers
     @IBAction func didPressShareButton(_ sender: Any) {
-        UIGraphicsBeginImageContextWithOptions(containerView.frame.size, false, 0)
-        if let context = UIGraphicsGetCurrentContext() {
-            containerView.layer.render(in: context)
-            if let imageToShare = UIGraphicsGetImageFromCurrentImageContext() {
-                let activityController = UIActivityViewController(activityItems: [imageToShare],
-                                                                  applicationActivities: nil)
-                activityController.completionWithItemsHandler = {[weak self] activity, success, items, error in
-                    self?.save(memedImage: imageToShare)
-                }
-                UIPresenter.presentViewController(presentedViewController: activityController, from: self)
-            }
-            UIGraphicsEndImageContext()
+        MemeManager.shareImage(from: self, for: containerView) { [weak self](image) in
+            self?.save(memedImage: image)
         }
     }
 
@@ -79,7 +69,6 @@ class ViewController: UIViewController {
         // Create the meme
         let _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeView.image!, memedImage: memedImage)
     }
-
 }
 
 //MARK: - UIImagePickerControllerDelegate Methods

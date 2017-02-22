@@ -35,9 +35,10 @@ class UIPresenter {
     static func setTextFieldAttributes (for outletCollection: [UITextField]) {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
+
         let memeTextAttributes:[String:Any] = [NSStrokeColorAttributeName: UIColor.black,
                                                NSForegroundColorAttributeName: UIColor.white,
-                                               NSFontAttributeName: UIFont(name: "PermanentMarker", size: 32)!,
+                                               NSFontAttributeName: UIFont(name: "PermanentMarker", size: 32)!,////https://fonts.google.com/specimen/Permanent+Marker (Free and Opensource)
                                                NSStrokeWidthAttributeName: 2,
                                                NSParagraphStyleAttributeName: style]
         _ = outletCollection.map({$0.defaultTextAttributes = memeTextAttributes})
@@ -57,9 +58,13 @@ extension UIPresenter {
             }
         }
         else {
-            AlertManager.showAlertController(with: .alert, title: Messages.errorTitle.rawValue, message: Messages.notAvailable.rawValue, alertActions: alertActions, presentationHandler: { (controller, animated) in
-                UIPresenter.presentViewController(presentedViewController: controller, from: viewController)
-            }, actionHandler: nil)
+            AlertManager.showAlertController(with: .alert,
+                                             title: Messages.errorTitle.rawValue,
+                                             message: Messages.notAvailable.rawValue,
+                                             alertActions: alertActions,
+                                             presentationHandler: { (controller, animated) in
+                UIPresenter.presentViewController(presentedViewController: controller, from: viewController)},
+                                             actionHandler: nil)
         }
     }
 }

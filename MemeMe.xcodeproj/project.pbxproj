@@ -10,6 +10,7 @@
 		C70FD7AB1E5D436400120E36 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FD7AA1E5D436400120E36 /* NotificationManager.swift */; };
 		C70FD7AD1E5D4FFA00120E36 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FD7AC1E5D4FFA00120E36 /* Meme.swift */; };
 		C70FD7B51E5D629700120E36 /* UIPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FD7B41E5D629700120E36 /* UIPresenter.swift */; };
+		C70FD7B71E5D6A7200120E36 /* MemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70FD7B61E5D6A7200120E36 /* MemeManager.swift */; };
 		C795169E1E5C0F240076A7B1 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C795169D1E5C0F240076A7B1 /* AlertManager.swift */; };
 		C7BCBDA21E519AA300E3A043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCBDA11E519AA300E3A043 /* AppDelegate.swift */; };
 		C7BCBDA41E519AA300E3A043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCBDA31E519AA300E3A043 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 		C70FD7AA1E5D436400120E36 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C70FD7AC1E5D4FFA00120E36 /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 		C70FD7B41E5D629700120E36 /* UIPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPresenter.swift; sourceTree = "<group>"; };
+		C70FD7B61E5D6A7200120E36 /* MemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeManager.swift; sourceTree = "<group>"; };
 		C795169D1E5C0F240076A7B1 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		C7BCBD9E1E519AA300E3A043 /* MemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BCBDA11E519AA300E3A043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				C795169D1E5C0F240076A7B1 /* AlertManager.swift */,
+				C70FD7B61E5D6A7200120E36 /* MemeManager.swift */,
 				C70FD7AA1E5D436400120E36 /* NotificationManager.swift */,
+				C70FD7B41E5D629700120E36 /* UIPresenter.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -86,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				C7CFCD511E52C964005209D7 /* Constants.swift */,
-				C70FD7B41E5D629700120E36 /* UIPresenter.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				C7BCBDA41E519AA300E3A043 /* ViewController.swift in Sources */,
 				C7BCBDA21E519AA300E3A043 /* AppDelegate.swift in Sources */,
 				C70FD7AB1E5D436400120E36 /* NotificationManager.swift in Sources */,
+				C70FD7B71E5D6A7200120E36 /* MemeManager.swift in Sources */,
 				C70FD7AD1E5D4FFA00120E36 /* Meme.swift in Sources */,
 				C795169E1E5C0F240076A7B1 /* AlertManager.swift in Sources */,
 				C7CFCD521E52C964005209D7 /* Constants.swift in Sources */,
