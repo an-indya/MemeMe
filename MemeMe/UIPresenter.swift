@@ -37,9 +37,9 @@ class UIPresenter {
         style.alignment = .center
 
         let memeTextAttributes:[String:Any] = [NSStrokeColorAttributeName: UIColor.black,
-                                               NSForegroundColorAttributeName: UIColor.white,
+                                               NSForegroundColorAttributeName: UIColor.yellow,
                                                NSFontAttributeName: UIFont(name: "PermanentMarker", size: 32)!,////https://fonts.google.com/specimen/Permanent+Marker (Free and Opensource)
-                                               NSStrokeWidthAttributeName: 2,
+                                               NSStrokeWidthAttributeName: -4.0,
                                                NSParagraphStyleAttributeName: style]
         _ = outletCollection.map({$0.defaultTextAttributes = memeTextAttributes})
     }
@@ -53,7 +53,7 @@ extension UIPresenter {
             if let viewController = viewController as? ViewController {
                 imagePicker.delegate = viewController
                 imagePicker.sourceType = source
-                imagePicker.allowsEditing = false
+                imagePicker.allowsEditing = true
                 presentViewController(presentedViewController: imagePicker, from: viewController)
             }
         }
