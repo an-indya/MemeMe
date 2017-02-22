@@ -8,66 +8,33 @@
 
 import UIKit
 
-enum TextFieldTag: Int {
-    case topTextField = 1
-    case bottomTextField = 2
-}
-
 class ViewController: UIViewController {
-    
+
     @IBOutlet weak var memeView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet var textFieldsOutletCollection: [UITextField]!
     @IBOutlet weak var containerView: UIView!
 
-    var selectedTextField: TextFieldTag = .topTextField
     let imagePicker = UIImagePickerController()
-    let photoPickerActions = [PickerItem(itemText: "Photo Library", itemSource: .photoLibrary, alertActionStyle: .default),
-                              PickerItem(itemText: "Camera", itemSource: .camera, alertActionStyle: .default),
-                              PickerItem(itemText: "Cancel", itemSource: nil, alertActionStyle: .destructive)]
+    let notificationManager = KeyboardNotificationManager.shared
 
 
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationManager.viewController = self
+        UIPresenter.setTextFieldAttributes(for: textFieldsOutletCollection)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        subscribeToKeyboardNotifications()
+        notificationManager.subscribeToKeyboardNotifications()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromKeyboardNotifications()
-    }
-
-    //MARK: - Keyboard notification subscription and handling
-    func subscribeToKeyboardNotifications () {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-    }
-
-    func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-    }
-
-    func keyboardWillShow(_ notification:Notification) {
-        if selectedTextField == .bottomTextField {
-            view.frame.origin.y -= getKeyboardHeight(notification)
-        }
-    }
-
-    func keyboardWillHide(_ notification:Notification) {
-        view.frame.origin.y = 0
-    }
-
-    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
+        notificationManager.unsubscribeFromAllKeyboardNotifications()
     }
 
     //MARK: - Event Handlers
@@ -76,72 +43,43 @@ class ViewController: UIViewController {
         if let context = UIGraphicsGetCurrentContext() {
             containerView.layer.render(in: context)
             if let imageToShare = UIGraphicsGetImageFromCurrentImageContext() {
-                let activityController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
-                present(activityController, animated: true, completion: nil)
+                let activityController = UIActivityViewController(activityItems: [imageToShare],
+                                                                  applicationActivities: nil)
+                activityController.completionWithItemsHandler = {[weak self] activity, success, items, error in
+                    self?.save(memedImage: imageToShare)
+                }
+                UIPresenter.presentViewController(presentedViewController: activityController, from: self)
             }
             UIGraphicsEndImageContext()
         }
     }
-    
+
     @IBAction func didTapCameraButton(_ sender: Any) {
-        showActionSheet()
+        AlertManager.showAlertController(with: .actionSheet,
+                                         title: Messages.choiceTitle.rawValue,
+                                         message: Messages.choiceText.rawValue,
+                                         alertActions: pickerActions,
+                                         presentationHandler: {[weak self](viewController, animated) in
+                                            UIPresenter.presentViewController(presentedViewController: viewController, from: self)},
+                                         actionHandler: {[weak self](sourceType) in
+                                            guard let weakSelf = self else { return }
+                                            UIPresenter.presentImagePicker(with: weakSelf.imagePicker, from: self, source: sourceType)
+        })
     }
-    
+
     @IBAction func didCancel(_ sender: Any) {
-        resetView()
+        UIPresenter.resetView(for: textFieldsOutletCollection, imageView: memeView)
     }
-    
+
     @IBAction func didPressBackground(_ sender: Any) {
         _ = textFieldsOutletCollection.map({$0.resignFirstResponder()})
     }
-    
-    func presentImagePicker(with source: UIImagePickerControllerSourceType) {
-        if UIImagePickerController.isSourceTypeAvailable(source) {
-            imagePicker.delegate = self
-            imagePicker.sourceType = source
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            showAlert(message: .notAvailable)
-        }
+
+    func save(memedImage: UIImage) {
+        // Create the meme
+        let _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeView.image!, memedImage: memedImage)
     }
 
-    //MARK: - Convenience Methods
-    func resetView () {
-        memeView.image = nil
-        resetTextFields(enabled: false)
-    }
-
-    /// Resets all text fields to their original state and based on parameter enables/disables them
-    ///
-    /// - Parameter state: If true, the text fields are enabled, else disabled
-    func resetTextFields(enabled state: Bool) {
-        _ = textFieldsOutletCollection.map({ (textField) -> UITextField in
-            textField.text = ""
-            textField.isEnabled = state
-            return textField
-        })
-    }
-    
-    func showAlert(message: Messages) {
-        let controller = UIAlertController(title: Messages.errorTitle.rawValue, message: message.rawValue, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        controller.addAction(action)
-        present(controller, animated: true, completion: nil)
-    }
-    
-    func showActionSheet () {
-        let actionSheet = UIAlertController(title: Messages.choiceTitle.rawValue, message: Messages.choiceText.rawValue, preferredStyle: .actionSheet)
-        for action in photoPickerActions {
-            actionSheet.addAction(UIAlertAction(title: action.itemText, style: action.alertActionStyle) { [weak self] (axn) in
-                if let itemSource = action.itemSource {
-                    self?.presentImagePicker(with: itemSource)
-                }
-            })
-        }
-        present(actionSheet, animated: true, completion: nil)
-    }
 }
 
 //MARK: - UIImagePickerControllerDelegate Methods
@@ -151,7 +89,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             memeView.image = image
         }
-        resetTextFields(enabled: true)
+        UIPresenter.resetTextFields(outletCollection: textFieldsOutletCollection, enabled: true)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -160,7 +98,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        selectedTextField = textField.tag == topTextField.tag ? .topTextField : .bottomTextField
+        notificationManager.selectedTextField = textField.tag == topTextField.tag ? .topTextField : .bottomTextField
         return true
     }
 }
