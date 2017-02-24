@@ -23,6 +23,11 @@ enum AlertButtonText: String {
     case ok = "OK"
 }
 
+enum StoryboardIds: String {
+    case showMemeEditor = "showMemeEditor"
+    case showMemeDetails = "showMemeDetails"
+}
+
 struct ActionItem {
     var itemText: AlertButtonText
     var itemSource: UIImagePickerControllerSourceType?

@@ -19,6 +19,7 @@ class UIPresenter {
     }
 
     //MARK: - Convenience Methods
+
     static func resetView (for outletCollection: [UITextField], imageView: UIImageView) {
         imageView.image = nil
         resetTextFields(outletCollection: outletCollection, enabled: false)

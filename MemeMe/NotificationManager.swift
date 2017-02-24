@@ -16,9 +16,10 @@ enum TextFieldTag: Int {
 
 final class KeyboardNotificationManager : NSObject {
     static let shared = KeyboardNotificationManager()
+    private override init() {}
     var selectedTextField: TextFieldTag = .topTextField
     var viewController: UIViewController?
-    private override init() {}
+
 
     func subscribeToKeyboardNotifications () {
         NotificationCenter.default.addObserver(self,

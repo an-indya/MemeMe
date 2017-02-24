@@ -16,6 +16,7 @@ class MemeViewController: UIViewController {
     @IBOutlet var textFieldsOutletCollection: [UITextField]!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    weak var delegate: MemeEditorDelegate?
 
     let imagePicker = UIImagePickerController()
     let notificationManager = KeyboardNotificationManager.shared
@@ -61,6 +62,9 @@ class MemeViewController: UIViewController {
     @IBAction func didCancel(_ sender: Any) {
         UIPresenter.resetView(for: textFieldsOutletCollection, imageView: memeView)
         shareButton.isEnabled = false
+        self.dismiss(animated: true) {[weak self] in
+            self?.delegate?.didFinishEditingMeme()
+        }
     }
 
     @IBAction func didPressBackground(_ sender: Any) {
@@ -72,7 +76,8 @@ class MemeViewController: UIViewController {
         if let topText = topTextField.text,
             let bottomText = bottomTextField.text,
             let originalImage = memeView.image {
-            let _ = Meme(topText: topText, bottomText: bottomText, originalImage: originalImage, memedImage: memedImage)
+            let meme = Meme(topText: topText, bottomText: bottomText, originalImage: originalImage, memedImage: memedImage)
+            MemeCollection.shared.memeCollection.append(meme)
         }
         else {
             AlertManager.showAlertController(with: .alert, title: Messages.errorTitle.rawValue, message: Messages.textMissing.rawValue, alertActions: alertActions, presentationHandler: { [weak self](viewController, animated) in
@@ -102,6 +107,10 @@ extension MemeViewController: UITextFieldDelegate {
         notificationManager.selectedTextField = textField.tag == topTextField.tag ? .topTextField : .bottomTextField
         return true
     }
+}
+
+protocol MemeEditorDelegate : class {
+    func didFinishEditingMeme ()
 }
 
 
