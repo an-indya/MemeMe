@@ -11,6 +11,14 @@ import Foundation
 final class MemeCollection : NSObject {
     static let shared = MemeCollection()
     var memeCollection = [Meme]()
-    private override init() {}
+
+    private override init() {
+        memeCollection = [Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
+                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
+                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
+                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
+                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
+                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date())]
+    }
 
 }

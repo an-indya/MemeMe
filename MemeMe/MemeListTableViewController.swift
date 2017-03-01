@@ -16,6 +16,11 @@ class MemeListTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -31,9 +36,11 @@ class MemeListTableViewController: UITableViewController {
         let cell: MemeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "memeCell", for: indexPath) as! MemeTableViewCell
         let meme = memeList.memeCollection[indexPath.row]
         cell.memeImage.image = meme.memedImage
-        cell.topText.text = "Top Text: \(meme.topText)"
-        cell.bottomText.text = "Bottom Text: \(meme.bottomText)"
-
+        cell.topText.text = "\(meme.topText)"
+        cell.bottomText.text = "\(meme.bottomText)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        cell.dateLabel.text = dateFormatter.string(from: meme.createdOn)
         return cell
     }
 

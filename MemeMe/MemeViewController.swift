@@ -76,7 +76,7 @@ class MemeViewController: UIViewController {
         if let topText = topTextField.text,
             let bottomText = bottomTextField.text,
             let originalImage = memeView.image {
-            let meme = Meme(topText: topText, bottomText: bottomText, originalImage: originalImage, memedImage: memedImage)
+            let meme = Meme(topText: topText, bottomText: bottomText, originalImage: originalImage, memedImage: memedImage, createdOn: Date())
             MemeCollection.shared.memeCollection.append(meme)
         }
         else {
