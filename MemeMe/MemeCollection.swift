@@ -13,12 +13,8 @@ final class MemeCollection : NSObject {
     var memeCollection = [Meme]()
 
     private override init() {
-        memeCollection = [Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
-                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
-                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
-                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
-                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date()),
-                          Meme(topText: "A", bottomText: "B", originalImage: #imageLiteral(resourceName: "collection"), memedImage: #imageLiteral(resourceName: "table"), createdOn: Date())]
+        //Mock
+        memeCollection = [Meme(topText: "Waterfall model", bottomText: "is scenic!!!", originalImage: #imageLiteral(resourceName: "sample"), memedImage: #imageLiteral(resourceName: "sample"), createdOn: Date()), Meme(topText: "Odd man", bottomText: "Out!", originalImage: #imageLiteral(resourceName: "sample2"), memedImage: #imageLiteral(resourceName: "sample2"), createdOn: Date())]
     }
 
 }

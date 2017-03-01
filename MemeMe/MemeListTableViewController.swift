@@ -36,8 +36,7 @@ class MemeListTableViewController: UITableViewController {
         let cell: MemeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "memeCell", for: indexPath) as! MemeTableViewCell
         let meme = memeList.memeCollection[indexPath.row]
         cell.memeImage.image = meme.memedImage
-        cell.topText.text = "\(meme.topText)"
-        cell.bottomText.text = "\(meme.bottomText)"
+        cell.topText.text = "\(meme.topText)...\(meme.bottomText)"
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         cell.dateLabel.text = dateFormatter.string(from: meme.createdOn)
