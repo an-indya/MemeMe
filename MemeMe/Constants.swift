@@ -30,8 +30,8 @@ enum StoryboardIds: String {
 
 struct ActionItem {
     var itemText: AlertButtonText
-    var itemSource: UIImagePickerControllerSourceType?
-    var alertActionStyle: UIAlertActionStyle
+    var itemSource: UIImagePickerController.SourceType?
+    var alertActionStyle: UIAlertAction.Style
 }
 
 struct PickerActionList {

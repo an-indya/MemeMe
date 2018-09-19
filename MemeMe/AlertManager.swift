@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 struct AlertManager {
-    static func showAlertController (with style: UIAlertControllerStyle,
+    static func showAlertController (with style: UIAlertController.Style,
                                      title: String,
                                      message: String,
                                      alertActions: [ActionItem],
                                      presentationHandler: (UIViewController, Bool) -> Void,
-                                     actionHandler: ((UIImagePickerControllerSourceType) -> Void)?) {
+                                     actionHandler: ((UIImagePickerController.SourceType) -> Void)?) {
         let alertController = UIAlertController(title: title,
                                                 message: message,
                                                 preferredStyle: style)

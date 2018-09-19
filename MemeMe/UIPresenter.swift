@@ -37,19 +37,19 @@ class UIPresenter {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
 
-        let memeTextAttributes:[String:Any] = [NSStrokeColorAttributeName: UIColor.black,
-                                               NSForegroundColorAttributeName: UIColor.yellow,
-                                               NSFontAttributeName: UIFont(name: "PermanentMarker", size: 32)!,////https://fonts.google.com/specimen/Permanent+Marker (Free and Opensource)
-                                               NSStrokeWidthAttributeName: -4.0,
-                                               NSParagraphStyleAttributeName: style]
-        _ = outletCollection.map({$0.defaultTextAttributes = memeTextAttributes})
+        let memeTextAttributes:[String:Any] = [convertFromNSAttributedStringKey(NSAttributedString.Key.strokeColor): UIColor.black,
+                                               convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.yellow,
+                                               convertFromNSAttributedStringKey(NSAttributedString.Key.font): UIFont(name: "PermanentMarker", size: 32)!,////https://fonts.google.com/specimen/Permanent+Marker (Free and Opensource)
+                                               convertFromNSAttributedStringKey(NSAttributedString.Key.strokeWidth): -4.0,
+                                               convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle): style]
+        _ = outletCollection.map({$0.defaultTextAttributes = convertToNSAttributedStringKeyDictionary(memeTextAttributes)})
     }
 }
 
 extension UIPresenter {
     static func presentImagePicker(with imagePicker: UIImagePickerController,
                                    from viewController: UIViewController?,
-                                   source: UIImagePickerControllerSourceType) {
+                                   source: UIImagePickerController.SourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source) {
             if let viewController = viewController as? MemeViewController {
                 imagePicker.delegate = viewController
@@ -68,4 +68,14 @@ extension UIPresenter {
                                              actionHandler: nil)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.Key: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }
